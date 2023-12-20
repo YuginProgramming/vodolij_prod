@@ -375,6 +375,23 @@ export const anketaListiner = async() => {
           await updateUserByChatId(chatId, { lastname: JSON.stringify(userCard.data.user) }); 
           */
           let currentTime = DateTime.now().toFormat('yy-MM-dd HH:mm:ss');
+
+          console.log(userDatafromApi.card[0]);
+
+          if (!userDatafromApi.card[0]) {
+            const cardData = 
+              {
+                CardGroup: 'Demo',
+                WaterQty: 356,
+                AllQty: 1245,
+                Discount: 90,
+              }
+            
+            userDatafromApi.card.push(cardData);
+          }
+
+          console.log(userDatafromApi);
+
           const balanceMessage = `
             ${userDatafromApi.name}
           ${currentTime}
@@ -404,6 +421,9 @@ export const anketaListiner = async() => {
           bot.sendMessage(msg.chat.id, userBonusAcc, {
             reply_markup: { keyboard: keyboards.accountStatus, resize_keyboard: true, one_time_keyboard: true }
           });
+          break;
+        case 'Служба підтримки': 
+          bot.sendMessage(msg.chat.id, 'Номер телефону, за яким надаємо допомогу клієнтам: 0964587425');
           break;
         case '📊 Історія операцій':
           bot.sendMessage(msg.chat.id, phrases.userHistory, {
